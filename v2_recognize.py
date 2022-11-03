@@ -16,7 +16,7 @@ def transcribe_streaming_v2(project_id, recognizer_id, audio_file):
         parent=f"projects/{project_id}/locations/global",
         recognizer_id=recognizer_id,
         recognizer=cloud_speech.Recognizer(
-            language_codes=["en-US"], model="latest_long"
+            language_codes=["en-US"], model="telephony"
         ),
     )
 
@@ -29,7 +29,7 @@ def transcribe_streaming_v2(project_id, recognizer_id, audio_file):
         content = f.read()
 
     # In practice, stream should be a generator yielding chunks of audio data
-    chunk_length = len(content) // 5
+    chunk_length = 15360
     stream = [
         content[start: start + chunk_length]
         for start in range(0, len(content), chunk_length)
@@ -39,9 +39,21 @@ def transcribe_streaming_v2(project_id, recognizer_id, audio_file):
     )
 
     recognition_config = cloud_speech.RecognitionConfig(
-        auto_decoding_config={})
+        auto_decoding_config={},
+        explicit_decoding_config=cloud_speech.ExplicitDecodingConfig(
+            encoding=2,
+            sample_rate_hertz=8000,
+            audio_channel_count=1,
+        ),
+        )   
+
+    streaming_features = cloud_speech.StreamingRecognitionFeatures(
+        enable_voice_activity_events=1,
+        interim_results=1
+    )
     streaming_config = cloud_speech.StreamingRecognitionConfig(
-        config=recognition_config
+        config=recognition_config,
+        streaming_features=streaming_features
     )
     config_request = cloud_speech.StreamingRecognizeRequest(
         recognizer=recognizer.name, streaming_config=streaming_config
@@ -59,13 +71,14 @@ def transcribe_streaming_v2(project_id, recognizer_id, audio_file):
     responses = []
     for response in responses_iterator:
         responses.append(response)
+
+        print(response.speech_event_type)
+        print()
         for result in response.results:
             print("Transcript: {}".format(result.alternatives[0].transcript))
 
     return responses
 
-
 recognizer_id = "recognizer-" + str(uuid4())
 
-
-transcribe_streaming_v2("ringochat", recognizer_id, "audio.wav")
+transcribe_streaming_v2("ringochat", recognizer_id, input("Enter File path: "))

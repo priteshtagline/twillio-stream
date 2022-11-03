@@ -23,10 +23,9 @@ def transcribe_streaming(stream_file):
     )
 
     config = speech.RecognitionConfig(
-        encoding=speech.RecognitionConfig.AudioEncoding.MULAW,
+        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
         sample_rate_hertz=8000,
         language_code="en-US",
-        model= 'phone_call'
     )
 
     streaming_config = speech.StreamingRecognitionConfig(config=config)
@@ -53,4 +52,4 @@ def transcribe_streaming(stream_file):
                 print("Confidence: {}".format(alternative.confidence))
                 print(u"Transcript: {}".format(alternative.transcript))
 
-transcribe_streaming('audio.wav')
+transcribe_streaming('1.wav')

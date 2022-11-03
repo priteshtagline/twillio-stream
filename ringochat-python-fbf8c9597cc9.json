@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "ringochat",
+  "private_key_id": "fbf8c9597cc90f7177b87fdbcec82f79aba09781",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDWo71SpNBf/dXi\n+XZPfgwkfvVfjIjSuaUp+oXEGTO6bU+RaTtvQ9Wv+Ik+S9XxKT2+3N8bE+rDbjEw\ng7jV1q0gcZxkHg7O0crEM4FtHC2HFq/hG+oanuzQPLY16vST25IRU3EkBS8fYrk/\nn3oHO5ngka0oisrEbBJNkOve+oRrmJjR1hz8ECYAIWTALtGuxp+oAlo8DJ1l7vz5\nosa53w2k1UJRtY/LwememLdJrwnXXzTCagRfljNpPhWoEYrNDIROi5Fdb+GXVeW0\npNv0bn0hAIDP5sUntydj2eaCbDI2JNYfzu4MP1J3/rG4lNh4+O0czEQKOtA2MZtl\nivUU/QFNAgMBAAECggEAKEeOmCOHWjhFywRDJFxUdYXg0NdL9vWxTd0ufLQ5DaeF\nWtW7emApyg3zXX44TjtN09NZyBhXAmlbsE3L4k9Y6oF/lpdAcqYSrfq3c20qCxOi\nGnXVWz0PVm3KSPiIgPXf5cH5tceGRhbOCmdIbHKOKENWUkknj7BzR9ymMxBiyNkA\ne5xLJK1hSN9McqM8iAl+gPFv+8++Q5oCVmW+S9xNVYSPQL7UzPln25Z4KdDngaI1\nJD9h59CA8UiSedezoM9QVlLSF0UI2Q51WesoaAvwERIV/hXFO3diAYFkK2oDgwpG\nRca2b5FcHBBqhOwQWzHRWWyY7xVFnXgOV4CZPhPgKQKBgQDrT1qtIKY7IGIx60CT\nOGe/8TCSPtryTvDi8K2HxTNT0uhaWkCjpDvmai4MatguGFmIs/j7hGRlbkqrBOCE\n5F2Fm2tNR7/kegAV4CgofzJbzZZpUIGg/54KRfHJkf8/+UwgpxtY3S1MxaFJ09FQ\nXEaV7+5XB970jYK5V4o+L+8v1QKBgQDpgxx9Ge/Kbar4Ul/VdG3Wz9B/VXiwHVyN\nNP7zv6Bp+27YFrgjhX6IcUdKyYCcAm1vWZwSZqxifX4aMamAaoTkrY4BTCnJNc6y\nlQbdcr2FE7I3AhfNHlQFZ9AcDFRizK730ZJsz/MVA1ciL+eX4nPKSHayN+Vvyjkg\nGnY97zQ/mQKBgQCseB5LFMoiPisa0YYkIcyRd9OU7XMG9OtEOwnFoLltMAHT76C/\nEGpDCQI1Yb6PkpNVSiwtFa2MVplt3gY+AS+29OJh4zv315/maMSmYgxkEzyydip8\n+b45Y2jDyDmhBzVQHYtCx+IjChuchB8/2lJ2JUS5D3DQKERvWoVd7T5P/QKBgCMw\nUta3Vd9Xb3BEWZS9GuBIKM9HfgxsIEpXNiRdODtAXI/LvKv9rfe5uliWzP61jvA8\nvLw5JLki2CHyYeysIKKlVMT1SUa9CQz4UDSG2fB3619GvXd3nonB/yZ65SyOU7+c\noUgsfiEog7TvKyNESNau3NQ2gCi8fKdN1Yu3xFPhAoGAGff/gutKhRsTM9NmzBGY\nXL3WfyyV+tJLBChX6KD799T6SXtGVmcL17xvrEHSKChS4DT29pRFdw5+4RL6FYKi\nq+S0zwDKcAt3/Wqux/a0HrIwhBoc5hC0nt40mbsrNi7sjoltHJDJEnnKEc14rtIm\nxK/b7GPqMQ53/ThnI8BqqiI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "ringochat-python@ringochat.iam.gserviceaccount.com",
+  "client_id": "105502334314762030817",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ringochat-python%40ringochat.iam.gserviceaccount.com"
+}

@@ -1,14 +1,27 @@
+# Copyright 2022 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import argparse
+# [START speech_transcribe_streaming_voice_activity_events]
 import io
-import os
-from uuid import uuid4
+
 from google.cloud.speech_v2 import SpeechClient
 from google.cloud.speech_v2.types import cloud_speech
-from google.protobuf import duration_pb2
-
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "ringochat-python-fbf8c9597cc9.json"
 
 
-def transcribe_streaming_v2(project_id, recognizer_id, audio_file):
+def transcribe_streaming_voice_activity_events(project_id, recognizer_id, audio_file):
     # Instantiates a client
     client = SpeechClient()
 
@@ -16,7 +29,7 @@ def transcribe_streaming_v2(project_id, recognizer_id, audio_file):
         parent=f"projects/{project_id}/locations/global",
         recognizer_id=recognizer_id,
         recognizer=cloud_speech.Recognizer(
-            language_codes=["en-US"], model="telephony"
+            language_codes=["en-US"], model="latest_long"
         ),
     )
 
@@ -29,33 +42,26 @@ def transcribe_streaming_v2(project_id, recognizer_id, audio_file):
         content = f.read()
 
     # In practice, stream should be a generator yielding chunks of audio data
-    chunk_length = 350
+    chunk_length = len(content) // 5
     stream = [
         content[start: start + chunk_length]
         for start in range(0, len(content), chunk_length)
     ]
-    print(len(stream))
     audio_requests = (
         cloud_speech.StreamingRecognizeRequest(audio=audio) for audio in stream
     )
 
     recognition_config = cloud_speech.RecognitionConfig(
-        auto_decoding_config={},
-        explicit_decoding_config=cloud_speech.ExplicitDecodingConfig(
-            encoding=cloud_speech.ExplicitDecodingConfig.AudioEncoding.MULAW,
-            sample_rate_hertz=8000,
-            audio_channel_count=1,
-        ),
-    )
+        auto_decoding_config={})
 
+    # Sets the flag to enable voice activity events
     streaming_features = cloud_speech.StreamingRecognitionFeatures(
-        enable_voice_activity_events=True,
-        interim_results=True,
+        enable_voice_activity_events=True
     )
     streaming_config = cloud_speech.StreamingRecognitionConfig(
-        config=recognition_config,
-        streaming_features=streaming_features
+        config=recognition_config, streaming_features=streaming_features
     )
+
     config_request = cloud_speech.StreamingRecognizeRequest(
         recognizer=recognizer.name, streaming_config=streaming_config
     )
@@ -72,30 +78,31 @@ def transcribe_streaming_v2(project_id, recognizer_id, audio_file):
     responses = []
     for response in responses_iterator:
         responses.append(response)
-
-        print(response.speech_event_type)
         if (
             response.speech_event_type
             == cloud_speech.StreamingRecognizeResponse.SpeechEventType.SPEECH_ACTIVITY_BEGIN
         ):
-            print("*"*100)
             print("Speech started.")
         if (
             response.speech_event_type
             == cloud_speech.StreamingRecognizeResponse.SpeechEventType.SPEECH_ACTIVITY_END
         ):
-            print("*"*100)
             print("Speech ended.")
-
         for result in response.results:
-            if result.alternatives:
-                print("Transcript: {}".format(
-                    result.alternatives[0].transcript))
+            print("Transcript: {}".format(result.alternatives[0].transcript))
 
     return responses
+# [END speech_transcribe_streaming_voice_activity_events]
 
 
-recognizer_id = "recognizer-" + str(uuid4())
-
-# transcribe_streaming_v2("ringochat", recognizer_id, input("Enter File path: "))
-transcribe_streaming_v2("ringochat", recognizer_id, "audio/10.wav")
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument("project_id", help="project to create recognizer in")
+    parser.add_argument("recognizer_id", help="name of recognizer to create")
+    parser.add_argument("audio_file", help="audio file to stream")
+    args = parser.parse_args()
+    transcribe_streaming_voice_activity_events(
+        args.project_id, args.recognizer_id, args.audio_file
+    )

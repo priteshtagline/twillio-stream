@@ -52,4 +52,4 @@ def transcribe_streaming(stream_file):
                 print("Confidence: {}".format(alternative.confidence))
                 print(u"Transcript: {}".format(alternative.transcript))
 
-transcribe_streaming('1.wav')
+transcribe_streaming('audio/1.wav')
